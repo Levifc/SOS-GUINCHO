@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOS Guincho</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="container topo-conteudo">
+      <div>
+        <p class="etiqueta">Sistema Web Responsivo</p>
+        <h1>SOS Guincho</h1>
+      </div>
+      <button id="btnSair" class="botao secundario oculto">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="areaMensagem" class="mensagem oculto"></section>
+
+    <section id="areaAuth" class="grid duas-colunas bloco-auth">
+      <article class="card">
+        <h2>Entrar</h2>
+        <p class="texto-suave">Acesse como cliente, administrador ou motorista.</p>
+        <form id="formLogin" class="formulario">
+          <label>
+            Login
+            <input type="text" name="login" placeholder="exemplo@sos.com" required>
+          </label>
+          <label>
+            Senha
+            <input type="password" name="senha" placeholder="Sua senha" required>
+          </label>
+          <button class="botao principal" type="submit">Fazer login</button>
+        </form>
+        <div class="credenciais">
+          <strong>Teste administrador:</strong> admin@sos.com / 123456<br>
+          <strong>Teste motorista:</strong> motorista@sos.com / 123456
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Cadastrar cliente</h2>
+        <p class="texto-suave">Crie uma conta para solicitar guincho.</p>
+        <form id="formCadastro" class="formulario">
+          <label>
+            Nome completo
+            <input type="text" name="nome" required>
+          </label>
+          <label>
+            Telefone
+            <input type="text" name="telefone" required>
+          </label>
+          <label>
+            Endereço
+            <input type="text" name="endereco">
+          </label>
+          <label>
+            Login
+            <input type="text" name="login" required>
+          </label>
+          <label>
+            Senha
+            <input type="password" name="senha" minlength="6" required>
+          </label>
+          <button class="botao principal" type="submit">Cadastrar</button>
+        </form>
+      </article>
+    </section>
+
+    <section id="areaDashboard" class="oculto">
+      <div class="cabecalho-dashboard">
+        <div>
+          <p class="etiqueta" id="perfilUsuario"></p>
+          <h2 id="saudacaoUsuario"></h2>
+        </div>
+      </div>
+
+      <section id="dashboardCliente" class="oculto grid duas-colunas">
+        <article class="card">
+          <h3>Solicitar guincho</h3>
+          <p class="texto-suave">Preencha os dados. O valor aparece antes da confirmação.</p>
+          <form id="formPedido" class="formulario">
+            <label>
+              Endereço de atendimento
+              <input type="text" name="endereco_atendimento" required>
+            </label>
+            <label>
+              Localização ou referência
+              <input type="text" name="localizacao" placeholder="Ex.: próximo ao posto, BR-405..." required>
+            </label>
+            <div class="grid duas-colunas interno">
+              <label>
+                Placa
+                <input type="text" name="placa" maxlength="10" required>
+              </label>
+              <label>
+                Modelo do veículo
+                <input type="text" name="modelo" required>
+              </label>
+            </div>
+            <div class="grid duas-colunas interno">
+              <label>
+                Tipo de problema
+                <select name="tipo_problema" required>
+                  <option value="">Selecione</option>
+                  <option>Pane mecânica</option>
+                  <option>Acidente</option>
+                  <option>Bateria</option>
+                  <option>Pneu</option>
+                  <option>Sem combustível</option>
+                  <option>Chave trancada</option>
+                  <option>Outro</option>
+                </select>
+              </label>
+              <label>
+                Tipo de serviço
+                <select name="tipo_servico" required>
+                  <option value="">Selecione</option>
+                  <option>Pane mecânica</option>
+                  <option>Acidente</option>
+                  <option>Bateria</option>
+                  <option>Pneu</option>
+                  <option>Transporte</option>
+                  <option>Outro</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              Descrição do problema
+              <textarea name="descricao_problema" rows="3"></textarea>
+            </label>
+            <label>
+              Observações
+              <textarea name="observacoes" rows="2"></textarea>
+            </label>
+            <div class="valor-box">
+              <span>Valor estimado</span>
+              <strong id="valorEstimado">R$ 0,00</strong>
+            </div>
+            <button class="botao principal" type="submit">Confirmar pedido</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="linha-titulo">
+            <h3>Meus pedidos</h3>
+            <button id="btnAtualizarCliente" class="botao pequeno">Atualizar</button>
+          </div>
+          <div id="listaPedidosCliente" class="lista-cards"></div>
+        </article>
+      </section>
+
+      <section id="dashboardAdmin" class="oculto">
+        <article class="card">
+          <h3>Painel administrativo</h3>
+          <form id="formFiltrosAdmin" class="formulario filtros">
+            <label>
+              Busca
+              <input type="text" name="busca" placeholder="Cliente, telefone, placa, serviço...">
+            </label>
+            <label>
+              Status
+              <select name="status">
+                <option value="">Todos</option>
+                <option>Solicitado</option>
+                <option>Em análise</option>
+                <option>Guincho a caminho</option>
+                <option>Em atendimento</option>
+                <option>Finalizado</option>
+                <option>Cancelado</option>
+              </select>
+            </label>
+            <label>
+              Início
+              <input type="date" name="inicio">
+            </label>
+            <label>
+              Fim
+              <input type="date" name="fim">
+            </label>
+            <div class="acoes-filtro">
+              <button class="botao principal" type="submit">Filtrar</button>
+              <button id="btnRelatorio" class="botao secundario" type="button">Gerar relatório</button>
+            </div>
+          </form>
+          <div id="resumoRelatorio" class="resumo oculto"></div>
+          <div class="tabela-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pedido</th>
+                  <th>Cliente</th>
+                  <th>Veículo</th>
+                  <th>Status</th>
+                  <th>Valor</th>
+                  <th>Motorista</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaPedidosAdmin"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="dashboardMotorista" class="oculto">
+        <article class="card">
+          <div class="linha-titulo">
+            <h3>Meus atendimentos</h3>
+            <button id="btnAtualizarMotorista" class="botao pequeno">Atualizar</button>
+          </div>
+          <div id="listaAtendimentosMotorista" class="lista-cards"></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      SOS Guincho — Projeto acadêmico executado localmente
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
