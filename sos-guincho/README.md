@@ -1,171 +1,330 @@
 # SOS Guincho
 
-Sistema web responsivo para solicitação, confirmação, acompanhamento e gestão de atendimentos de guincho.
+Sistema web para solicitação e gerenciamento de serviços de guincho, desenvolvido como Projeto Final da disciplina **PEX0162 - Engenharia de Software**.
 
-O projeto foi montado com base na documentação enviada, contemplando: cadastro e login de usuários, perfis de Cliente, Administrador e Motorista, solicitação de guincho, dados do veículo, localização, problema, tipo de serviço, visualização do valor antes da confirmação, acompanhamento de status, painel administrativo, área do motorista, relatórios e banco de dados relacional MySQL.
+## 1. Objetivo do Sistema
 
-## Tecnologias usadas
+O objetivo do **SOS Guincho** é facilitar a solicitação de serviços de guincho por clientes, permitindo que pedidos sejam registrados, acompanhados e gerenciados de forma simples por meio de uma aplicação web.
 
-- HTML5
-- CSS3 responsivo
-- JavaScript
-- Node.js
-- Express.js
-- MySQL
-- JWT para autenticação
-- bcryptjs para proteção de senhas
-- Git/GitHub preparado com `.gitignore`
+O sistema também oferece funcionalidades para administradores e motoristas, possibilitando o controle dos atendimentos, atualização de status e visualização de relatórios básicos.
 
-## Estrutura do projeto
+## 2. Descrição do Problema
+
+Em situações de emergência veicular, muitos clientes enfrentam dificuldades para solicitar um guincho de forma rápida, acompanhar o andamento do atendimento e obter informações claras sobre o serviço solicitado.
+
+Além disso, empresas ou prestadores de serviço de guincho podem ter dificuldade para organizar pedidos, distribuir atendimentos e acompanhar o status das solicitações.
+
+O **SOS Guincho** busca resolver esse problema oferecendo uma plataforma simples, centralizada e navegável para cadastro de usuários, solicitação de guincho, acompanhamento de pedidos e gerenciamento administrativo.
+
+## 3. Principais Funcionalidades
+
+### Cliente
+
+* Cadastro de cliente.
+* Login no sistema.
+* Solicitação de guincho.
+* Informar dados pessoais, localização, veículo, problema e tipo de serviço.
+* Visualização do valor antes da confirmação.
+* Acompanhamento do status do pedido.
+* Cancelamento permitido antes da confirmação do atendimento.
+
+### Administrador
+
+* Login administrativo.
+* Visualização geral dos pedidos.
+* Busca e filtragem de solicitações.
+* Acompanhamento dos atendimentos.
+* Acesso a relatório básico dos pedidos.
+* Gerenciamento do fluxo de atendimento.
+
+### Motorista
+
+* Login de motorista.
+* Visualização dos atendimentos disponíveis ou atribuídos.
+* Atualização do status do atendimento.
+* Acompanhamento das informações necessárias para realização do serviço.
+
+## 4. Tecnologias Utilizadas
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Banco de Dados
+
+* MySQL
+
+### Outras Ferramentas
+
+* Git e GitHub para versionamento
+* Visual Studio Code como ambiente de desenvolvimento
+* Dotenv para variáveis de ambiente
+* Nodemon para ambiente de desenvolvimento
+
+## 5. Arquitetura Mínima
+
+O sistema foi organizado em uma arquitetura web simples, separando as responsabilidades entre frontend, backend e banco de dados.
+
+### 5.1 Estrutura Geral
+
+* O **frontend** é responsável pela interface com o usuário, telas de login, cadastro, solicitação de guincho, acompanhamento de pedidos e painéis.
+* O **backend** é responsável por receber as requisições, validar dados, autenticar usuários e executar as regras básicas do sistema.
+* O **banco de dados MySQL** armazena usuários, pedidos, informações dos veículos, status dos atendimentos e dados utilizados nos relatórios.
+
+### 5.2 Fluxo Básico de Funcionamento
+
+1. O usuário acessa o sistema pelo navegador.
+2. O cliente realiza cadastro ou login.
+3. O cliente solicita um serviço de guincho preenchendo os dados necessários.
+4. O backend recebe a solicitação e registra as informações no banco de dados.
+5. O administrador visualiza os pedidos no painel administrativo.
+6. O motorista acessa sua área para acompanhar e atualizar atendimentos.
+7. O cliente acompanha o status do pedido pelo sistema.
+
+### 5.3 Responsabilidades dos Principais Componentes
+
+| Componente                        | Responsabilidade                                                            |
+| --------------------------------- | --------------------------------------------------------------------------- |
+| `public/index.html`               | Estrutura principal da interface web.                                       |
+| `public/css/style.css`            | Estilização das telas e elementos visuais.                                  |
+| `public/js/app.js`                | Controle das interações do frontend e comunicação com o backend.            |
+| `src/server.js`                   | Inicialização do servidor Express e configuração das rotas principais.      |
+| `src/config/db.js`                | Configuração da conexão com o banco de dados MySQL.                         |
+| `src/middleware/auth.js`          | Middleware de autenticação e proteção de rotas.                             |
+| `src/routes/auth.routes.js`       | Rotas de cadastro, login e autenticação de usuários.                        |
+| `src/routes/pedidos.routes.js`    | Rotas relacionadas à criação, listagem e atualização de pedidos de guincho. |
+| `src/routes/relatorios.routes.js` | Rotas para geração e consulta de relatórios básicos.                        |
+| `database/schema.sql`             | Script de criação das tabelas do banco de dados.                            |
+| `database/seed.js`                | Script para inserir dados iniciais e usuários de teste.                     |
+
+## 6. Estrutura do Projeto
 
 ```text
 sos-guincho/
-├── database/
-│   ├── schema.sql
-│   └── seed.js
-├── public/
-│   ├── index.html
-│   ├── styles.css
-│   └── app.js
-├── src/
-│   ├── config/db.js
-│   ├── middleware/auth.js
-│   ├── routes/
-│   │   ├── admin.routes.js
-│   │   ├── auth.routes.js
-│   │   ├── motorista.routes.js
-│   │   └── pedidos.routes.js
-│   └── utils/calcValor.js
-├── .env.example
-├── .gitignore
-├── package.json
-└── server.js
+  database/
+    schema.sql
+    seed.js
+
+  public/
+    index.html
+    css/
+      style.css
+    js/
+      app.js
+
+  src/
+    config/
+      db.js
+    middleware/
+      auth.js
+    routes/
+      auth.routes.js
+      pedidos.routes.js
+      relatorios.routes.js
+    server.js
+
+  .env.example
+  package.json
+  README.md
 ```
 
-## Como executar localmente
+## 7. Instruções de Execução
 
-### 1. Instalar o Node.js
+### 7.1 Pré-requisitos
 
-Instale o Node.js em sua máquina, caso ainda não tenha.
+Antes de executar o projeto, é necessário ter instalado:
 
-### 2. Criar o banco MySQL
+* Node.js 18 ou superior
+* MySQL 8 ou superior
+* Git
+* VS Code ou outro editor de código
 
-Abra o MySQL Workbench, phpMyAdmin ou terminal MySQL e execute o arquivo:
+### 7.2 Clonar o Repositório
+
+```bash
+git clone LINK_DO_REPOSITORIO_AQUI
+cd sos-guincho
+```
+
+### 7.3 Criar o Banco de Dados
+
+Acesse o MySQL e crie o banco:
 
 ```sql
-database/schema.sql
+CREATE DATABASE sos_guincho CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Ele criará o banco `sos_guincho` e todas as tabelas necessárias.
+### 7.4 Importar a Estrutura do Banco
 
-### 3. Configurar o ambiente
+```bash
+mysql -u root -p sos_guincho < database/schema.sql
+```
 
-Copie o arquivo `.env.example` e renomeie para `.env`:
+### 7.5 Configurar Variáveis de Ambiente
+
+Copie o arquivo `.env.example` para `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-Depois edite o `.env` com o usuário e senha do seu MySQL.
-
-Exemplo:
+Depois, edite o arquivo `.env` com as informações do seu banco de dados:
 
 ```env
-PORT=3000
 DB_HOST=localhost
-DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=sua_senha
 DB_NAME=sos_guincho
-JWT_SECRET=troque_esta_chave_em_producao
+PORT=3000
+JWT_SECRET=sua_chave_secreta
 ```
 
-### 4. Instalar dependências
+### 7.6 Instalar Dependências
 
 ```bash
 npm install
 ```
 
-### 5. Inserir dados iniciais
+### 7.7 Inserir Dados Iniciais
 
 ```bash
 npm run seed
 ```
 
-Esse comando cria os status do pedido, um administrador e um motorista de teste.
-
-### 6. Rodar o sistema
+### 7.8 Iniciar o Servidor
 
 ```bash
 npm start
 ```
 
-Acesse no navegador:
+### 7.9 Acessar o Sistema
+
+Abra o navegador e acesse:
 
 ```text
 http://localhost:3000
 ```
 
-## Usuários de teste
+## 8. Usuários de Teste
 
-### Administrador
+| Perfil        | E-mail                                                      | Senha        |
+| ------------- | ----------------------------------------------------------- | ------------ |
+| Administrador | [admin@sosguincho.com](mailto:admin@sosguincho.com)         | admin123     |
+| Motorista     | [motorista@sosguincho.com](mailto:motorista@sosguincho.com) | motorista123 |
+| Cliente       | [cliente@sosguincho.com](mailto:cliente@sosguincho.com)     | cliente123   |
 
-- Login: `admin@sos.com`
-- Senha: `123456`
+## 9. Link do Protótipo
 
-### Motorista
+O protótipo navegável do sistema pode ser acessado pela própria aplicação local após iniciar o servidor:
 
-- Login: `motorista@sos.com`
-- Senha: `123456`
+```text
+http://localhost:3000
+```
 
-### Cliente
+Caso a equipe utilize um protótipo externo no Figma, Canva ou outra ferramenta, inserir o link abaixo:
 
-O cliente pode ser criado diretamente na tela de cadastro do sistema.
+```text
+Link do protótipo: INSERIR_LINK_DO_PROTOTIPO_AQUI
+```
 
-## Funcionalidades implementadas
+## 10. Backlog do Projeto
 
-### Cliente
+| ID   | História de Usuário                                                                    | Prioridade | Status                    |
+| ---- | -------------------------------------------------------------------------------------- | ---------- | ------------------------- |
+| HU01 | Como cliente, quero me cadastrar no sistema para poder solicitar serviços de guincho.  | Alta       | Implementado              |
+| HU02 | Como cliente, quero fazer login para acessar minhas solicitações.                      | Alta       | Implementado              |
+| HU03 | Como cliente, quero solicitar um guincho informando localização, veículo e problema.   | Alta       | Implementado              |
+| HU04 | Como cliente, quero visualizar o valor do serviço antes de confirmar o pedido.         | Média      | Implementado              |
+| HU05 | Como cliente, quero acompanhar o status da minha solicitação.                          | Alta       | Implementado              |
+| HU06 | Como administrador, quero visualizar todos os pedidos para acompanhar os atendimentos. | Alta       | Implementado              |
+| HU07 | Como administrador, quero filtrar e buscar pedidos para facilitar o gerenciamento.     | Média      | Implementado              |
+| HU08 | Como administrador, quero visualizar relatórios básicos dos pedidos.                   | Média      | Parcialmente implementado |
+| HU09 | Como motorista, quero visualizar os atendimentos para saber quais serviços realizar.   | Alta       | Implementado              |
+| HU10 | Como motorista, quero atualizar o status do atendimento.                               | Alta       | Implementado              |
+| HU11 | Como usuário, quero receber notificações em tempo real sobre o atendimento.            | Baixa      | Não implementado          |
+| HU12 | Como cliente, quero acompanhar o motorista em um mapa.                                 | Baixa      | Não implementado          |
 
-- Cadastro simples.
-- Login com usuário e senha.
-- Solicitação de guincho.
-- Registro de endereço/localização.
-- Registro de placa e modelo do veículo.
-- Registro do problema e observações.
-- Escolha do tipo de serviço.
-- Visualização do valor estimado antes de confirmar.
-- Confirmação do pedido.
-- Acompanhamento do status do pedido.
+## 11. Status Atual do Desenvolvimento
 
-### Administrador
+O projeto encontra-se em fase de **MVP inicial implementado**.
 
-- Login.
-- Visualização dos pedidos.
-- Busca/filtro por cliente, telefone, placa, serviço, status e período.
-- Atribuição de motorista a pedidos.
-- Geração de relatório com total de pedidos, total confirmado, valor total estimado e média.
+Nesta versão, o sistema já possui:
 
-### Motorista
+* Interface web navegável.
+* Cadastro e login de usuários.
+* Solicitação de guincho.
+* Painel administrativo.
+* Área do motorista.
+* Atualização de status dos pedidos.
+* Integração com banco de dados MySQL.
+* Dados iniciais para teste.
 
-- Login.
-- Visualização dos atendimentos atribuídos.
-- Consulta de dados do cliente, telefone, endereço, veículo, problema e status.
-- Atualização do status do atendimento.
+Algumas funcionalidades futuras ainda podem ser melhoradas ou adicionadas, como integração com mapas, notificações em tempo real, envio de mensagens automáticas e melhorias na segurança para ambiente de produção.
 
-## Status disponíveis
+## 12. Evolução do Projeto
 
-- Solicitado
-- Em análise
-- Guincho a caminho
-- Em atendimento
-- Finalizado
-- Cancelado
+O sistema evoluiu a partir dos requisitos levantados durante a disciplina, transformando as necessidades principais dos usuários em telas, funcionalidades e estrutura inicial de código.
 
-## Observações importantes
+A evolução ocorreu nas seguintes etapas:
 
-- O sistema foi feito para execução local, conforme o escopo da primeira versão.
-- Não possui pagamento online.
-- Não possui integração real com mapas.
-- Não possui notificações automáticas por SMS, WhatsApp ou e-mail.
-- O valor estimado é calculado de forma simples, por tipo de serviço e problema, para fins acadêmicos.
+1. Levantamento do problema e definição do público-alvo.
+2. Definição das funcionalidades principais do MVP.
+3. Criação da estrutura inicial do projeto.
+4. Desenvolvimento das telas navegáveis.
+5. Implementação do backend com Node.js e Express.
+6. Integração com banco de dados MySQL.
+7. Criação de perfis de usuário: cliente, administrador e motorista.
+8. Organização da documentação para apresentação final.
 
+## 13. Boas Práticas Utilizadas
+
+* Separação entre frontend, backend e banco de dados.
+* Organização de rotas por responsabilidade.
+* Uso de variáveis de ambiente.
+* Estrutura de pastas clara.
+* Código modularizado.
+* Banco de dados separado em script próprio.
+* Usuários de teste para facilitar a apresentação.
+* Documentação com instruções de execução.
+
+## 14. Limitações da Versão Atual
+
+Por se tratar de um MVP acadêmico, algumas funcionalidades ainda não foram implementadas completamente:
+
+* Integração real com mapas.
+* Rastreamento em tempo real.
+* Notificações automáticas.
+* Recuperação de senha.
+* Hospedagem em ambiente de produção.
+* Testes automatizados.
+* Validações avançadas de segurança.
+
+## 15. Possíveis Melhorias Futuras
+
+* Integração com API de mapas.
+* Notificações por WhatsApp, SMS ou e-mail.
+* Sistema de avaliação do atendimento.
+* Histórico completo de serviços por cliente.
+* Dashboard administrativo mais detalhado.
+* Aplicativo mobile para motoristas.
+* Testes automatizados.
+* Deploy em servidor ou serviço de nuvem.
+
+## 16. Integrantes da Equipe
+
+* LEVI FILGUEIRA CHAGAS
+* HISLENO SOSTENES FIDELIS MEDEIROS
+* FRANCISCO THIAGO DA SILVA PINHEIRO
+
+## 17. Observação Final
+
+Este projeto foi desenvolvido para fins acadêmicos, com foco na construção de um MVP funcional, organização do repositório, aplicação de conceitos de Engenharia de Software e apresentação técnica da solução.
+
+Para uso em ambiente real de produção, recomenda-se aplicar melhorias de segurança, autenticação mais robusta, deploy em servidor seguro, uso de HTTPS, tratamento avançado de erros, logs, testes automatizados e integração com serviços externos.
