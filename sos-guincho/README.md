@@ -319,9 +319,9 @@ Por se tratar de um MVP acadêmico, algumas funcionalidades ainda não foram imp
 
 ## 16. Integrantes da Equipe
 
-* LEVI FILGUEIRA CHAGAS
-* HISLENO SOSTENES FIDELIS MEDEIROS
-* FRANCISCO THIAGO DA SILVA PINHEIRO
+* LEVI FILGUEIRA CHAGAS (Frontend)
+* HISLENO SOSTENES FIDELIS MEDEIROS (Backend)
+* FRANCISCO THIAGO DA SILVA PINHEIRO (Banco de dados)
 
 ## 17. Observação Final
 
